@@ -37,10 +37,17 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
+<<<<<<< HEAD
               <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
             <p class ="pt-2"><a href ="login.php"> Already a member? Click here to login</a></p>
+=======
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+            <p class ="pt-2"><a href =" "> Already a member? Click here to login</a></p>
+>>>>>>> 6cb2e31690c09d4cbeea24f0cae6b2c1ace12b75
           </form>
         </div>
       </div>
