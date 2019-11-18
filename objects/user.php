@@ -15,12 +15,13 @@ class User{
   public $dob;
   public $created_at;
   public $updated_at;
-  public $fname;
-  public $lname;
+  public $firstname;
+  public $lastname;
 
   // constructor
   public function __construct($db){
-      $this->conn = $db;
+    $this->conn = $db;
   }
-}
-?>
+  
+
+  ?>

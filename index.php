@@ -1,4 +1,56 @@
 <!-- Landing Page navagation bar -->
+<?php
+// include classes
+include_once 'config/database.php';
+if (isset($_POST['create'])) {
+  $firstname =  $_POST['firstname'];
+  $lastname =  $_POST['lastname'];
+  $email =  $_POST['email'];
+  $dob =  $_POST['dob'];
+  $password =  $_POST['password'];
+  // receive all input values from the form
+  $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
+  $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $dob = mysqli_real_escape_string($conn, $_POST['dob']);
+  $password = mysqli_real_escape_string($conn, $_POST['password']);
+  $username = $firstname[0] . $lastname ."1911";
+
+  // form validation: ensure that the form is correctly filled ...
+  // by adding (array_push()) corresponding error unto $errors array
+  if (empty($firstname)) { array_push($errors, "First name is required"); }
+  if (empty($Lastname)) { array_push($errors, "Last name is required"); }
+  if (empty($email)) { array_push($errors, "Email is required"); }
+  if (empty($dob)) { array_push($errors, "Date of birth is required"); }
+  if (empty($password)) { array_push($errors, "Password is required"); }
+
+
+  // first check the database to make sure
+  // a user does not already exist with the same username and/or email
+  $user_check_query = "SELECT * FROM users WHERE  email='$email' LIMIT 1";
+  $result = mysqli_query($conn, $user_check_query);
+  $user = mysqli_fetch_assoc($result);
+
+  if ($user) { // if user exists
+    if ($user['email'] === $email) {
+      array_push($errors, "email already exists");
+    }
+  }
+
+  // Finally, register user if there are no errors in the form
+  if (count($errors) == 0) {
+   $password = md5($password);//encrypt the password before saving in the database
+
+   $query = "INSERT INTO users (firstname, lastname, email, dob, password, username)
+         VALUES('$firstname','$lastname', '$email','$dob', '$password','$username')";
+   mysqli_query($conn, $query);
+   $_SESSION['email'] = $email;
+   $_SESSION['success'] = "You are now logged in";
+   header('location: index.php');
+   echo "Thank You! you are now registered.";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -8,6 +60,10 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+
+
+  <div>
+  </div>
   <h1 class="text-center mb-4">The Accountant</h1>
   <div class="row justify-content-around">
     <img src="images/Logo_file.png" class="img-fluid logo ml-3" alt="Project Logo">
@@ -18,36 +74,30 @@
           <h3 class="text-center">Register</h3>
         </div>
         <div class="card-body">
-          <form>
+          <form method="post" action="index.php">
+            <?php include('errors.php'); ?>
             <div class="form-group">
-              <label for="fname">First Name</label>
-              <input type="text" class="form-control" required>
+              <label for="firstname">First Name</label>
+              <input type="text" class="form-control" name="firstname" >
             </div>
             <div class="form-group">
-              <label for="lname">Last Name</label>
-              <input type="text" class="form-control" required>
+              <label for="lastname">Last Name</label>
+              <input type="text" class="form-control" name="lastname" >
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" required>
+              <input type="email" class="form-control" name="email" >
             </div>
             <div class="form-group">
               <label for="dob">Date Of Birth</label>
-              <input type="date" class="form-control" required>
+              <input type="date" class="form-control" name="dob" >
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-<<<<<<< HEAD
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+              <input type="password" class="form-control"  name="password" placeholder="Password" >
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" name="create" class="btn btn-primary">Register</button>
             <p class ="pt-2"><a href ="login.php"> Already a member? Click here to login</a></p>
-=======
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-            <p class ="pt-2"><a href =" "> Already a member? Click here to login</a></p>
->>>>>>> 6cb2e31690c09d4cbeea24f0cae6b2c1ace12b75
           </form>
         </div>
       </div>

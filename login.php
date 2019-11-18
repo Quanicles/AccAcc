@@ -1,4 +1,8 @@
+<?php
+// core configuration
+include_once "config/core.php";
 
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -18,19 +22,19 @@
           <h3 class="text-center">Login</h3>
         </div>
         <div class="card-body">
-          <form>
+          <form action="includes/login.inc.php" method="post">
             <div class="form-group">
             <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" placeholder="Enter username" required>
+              <label for="email">Email</label>
+              <input type="text" class="form-control" name ="email" placeholder="Enter email" required>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password" required>
+              <input type="password" class="form-control" name ="password" placeholder="Enter password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <p class ="pt-2"><a href =" "> Forgot Password</a></p>
-            <p class ="pt-2"><a href =" "> Not a member? Click here to register</a></p>
+            <button type="submit" name="sing-in" class="btn btn-primary">Login</button>
+            <p class ="pt-2"><a href ="forgotpassword.php"> Forgot Password</a></p>
+            <p class ="pt-2"><a href ="index.php"> Not a member? Click here to register</a></p>
           </form>
         </div>
       </div>

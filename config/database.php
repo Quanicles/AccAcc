@@ -1,21 +1,15 @@
 <?php
-class Database{
-  private $host = "accountantdb.cecg8fpgzvzf.us-east-1.rds.amazonaws.com";
-  private $db_name = "theaccdb";
-  private $username = "root";
-  private $password = "admin123";
-  public $conn;
-  public function getConnection(){
 
-          $this->conn = null;
+$servername = "root.cgb1kkiboypt.us-east-1.rds.amazonaws.com";
+$dbusername = "root";
+$dbpassword = "admin123";
+$dbname = "theaccdb";
 
-          try{
-              $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-          }catch(PDOException $exception){
-              echo "Connection error: " . $exception->getMessage();
-          }
 
-          return $this->conn;
-      }
-  }
-  ?>
+$conn = mysqli_connect($servername,$dbusername,$dbpassword,$dbname);
+
+
+
+if(!$conn){
+  die("Connection failed: " .mysqli_connect_error());
+}
