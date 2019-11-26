@@ -1,4 +1,4 @@
-<?php
+<?php/*
 // login checker for 'customer' access level
 
 // if access level was not 'Admin', redirect him to login page
@@ -30,4 +30,5 @@ else if(isset($page_title) && ($page_title=="Login" || $page_title=="Sign Up")){
 else{
     // no problem, stay on current page
 }
+*/
 ?>
