@@ -9,7 +9,7 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 // home page url
-$home_url="http://localhost:8888/acc3/login.php";
+$home_url="http://localhost:8888/TheAccountant/login.php";
 
 // page given in URL parameter, default page is one
 $page = isset($_GET['page']) ? $_GET['page'] : 1;

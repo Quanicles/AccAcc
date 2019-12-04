@@ -18,6 +18,14 @@ if(isset($_POST['add'])){
       $_SESSION['response'] = "Account in use";
       mysqli_close($conn);
       exit();
+
+    }
+    else if(!is_numeric($account_number)){
+      $_SESSION['response'] = "Account number contains non-numeric values";
+      mysqli_close($conn);
+
+      header('location:chart-of-accounts.php');
+      exit();
     }
     else{
     $query = "INSERT INTO chart_acoount (account_number, account_name, type, term, balance, comments) VALUES (?,?,?,?,?,?)";

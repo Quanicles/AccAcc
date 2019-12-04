@@ -28,7 +28,7 @@ if (isset($_POST) and isset($_POST['email'])) {
         if ($result) {
             $to = $user['email'];
             $subject = 'Reset password';
-            $message = 'For reset your password go to link <a href="http://thaccountant/resetpassword.php?reset=' . $resetURL . '">http://thaccountant/resetpassword.php?reset=' . $resetURL . '</a>';
+            $message = 'For reset your password go to link <a href="http://http://localhost:8888/theaccountant/resetpassword.php?reset=' . $resetURL . '">http://http://localhost:8888/theaccountant/resetpassword.php?reset=' . $resetURL . '</a>';
             $result = mail($to, $subject, $message);
             if (!$result) {
                 array_push($errors, "Reset link was not send");

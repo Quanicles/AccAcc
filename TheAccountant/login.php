@@ -7,6 +7,9 @@ if (isset($_COOKIE['user'])) {
     $user_check_query = "SELECT role FROM users WHERE  id={$_COOKIE['user']} LIMIT 1";
     $result = mysqli_query($conn, $user_check_query);
     $user = mysqli_fetch_assoc($result);
+
+
+
     switch ($user['role']) {
         case 0:
             header('location: admin/adminpage.php');
@@ -18,6 +21,7 @@ if (isset($_COOKIE['user'])) {
             header('location: customerpage.php');
             break;
     }
+    
 }
 
 if (isset($_POST['sing-in'])) {
@@ -57,22 +61,22 @@ if (isset($_POST['sing-in'])) {
             array_push($errors, "Account on vacation");
         }
     }
-    elseif ($user['role'] == 0) {
+    else if ($user['role'] == 0) {
         $isAdmin = true;
     }
-    elseif ($user['role'] == 1) {
+    else if ($user['role'] == 1) {
         $isManager = true;
     }
 
     if (isset($errors) and count($errors) == 0) {
         setcookie('user', $user['id'], time()+3600);
-        if ($isAdmin) {
-            header('location: admin/adminpage.php');
+        if($user['role'] == 0){
+          header('location: admin/adminpage.php');
         }
-        elseif ($isManager) {
-            header('location: manager/managerpage.php');
+        else if($user['role'] == 1){
+          header('location: manager/managerpage.php');
         }
-        else {
+        else if($user['role'] == 2){
             header('location: customerpage.php');
         }
     }

@@ -96,9 +96,9 @@ $conn->close();
       </div>
       <div class="col mt-2">
         <div class="w-50 input-group mb-3 float-right">
-          <input type="text" class="form-control" placeholder="Search">
-          <div class="input-group-append-sm">
-            <button class="btn  btn-primary" type="button">Search</button>
+            <input type="text" id="search" class="form-control" placeholder="search" >
+            <div class="input-group-append-sm">
+              <button class="btn  btn-primary"  type="button">Search</button>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@ $conn->close();
     </div>
 
 
-	<table class="tbl-qa table table-hover">
+	<table class="tbl-qa table table-hover" >
 		<thead>
 			 <tr>
 				<th class="table-header" scope="col">Account Number</th>
@@ -120,20 +120,20 @@ $conn->close();
 				<th class="table-header" scope="col" colspan="2">Action</th>
 			  </tr>
 		</thead>
-		<tbody>
+		<tbody id="accTable">
 			<?php
 
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
 			?>
 			<tr class="table-row" scope="row" id="row-<?php echo $row["id"]; ?>">
-				<td class="table-row"><a href="#"><?php echo $row["account_number"]; ?></a></td>
+				<td class="table-row"><a href="../iledger.php?id=<?= $row["id"]; ?>"><?php echo $row["account_number"]; ?></a></td>
 				<td class="table-row"><?php echo $row["account_name"]; ?></td>
 				<td class="table-row"><?php echo $row["type"]; ?></td>
         <td class="table-row"><?php echo $row["term"]; ?></td>
-        <td class="table-row"><?php echo '$'. $row["balance"]; ?></td>
+        <td class="table-row"><?php echo '$'. number_format($row["balance"],2); ?></td>
         <td class="table-row"><?php echo $row["created_by"]; ?></td>
-        <td class="table-row"><?php echo $row["created_at"]; ?></td>
+        <td class="table-row"><?php echo date('Y-m-d', strtotime($row["created_at"])); ?></td>
         <td class="table-row"><?php echo $row["comments"]; ?></td>
 				<!-- action -->
 				<td class="table-row" colspan="2">
@@ -161,11 +161,19 @@ $conn->close();
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script>
   $("#btnCreate").click(function () {
       $("#account-create").show();
-      $("#btnCreate").hide();
+      $("#btnSend").hide();
   });
-  </script>
+$(document).ready(function(){
+  $("#search").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#accTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});</script>
 </body>
 </html>
