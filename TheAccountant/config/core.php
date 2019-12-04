@@ -9,7 +9,7 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 // home page url
-$home_url="http://localhost:8888/ThAccountant/";
+$home_url="http://localhost:8888/TheAccountant/login.php";
 
 // page given in URL parameter, default page is one
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -19,4 +19,12 @@ $records_per_page = 5;
 
 // calculate for the query LIMIT clause
 $from_record_num = ($records_per_page * $page) - $records_per_page;
+
+//define errors variable
+$errors = [];
+
+//after how long the password will become expired
+// Example of value https://www.php.net/manual/en/function.strtotime.php
+$expired = '+1 month';
+
 ?>

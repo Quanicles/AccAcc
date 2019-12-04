@@ -1,8 +1,8 @@
 <?php
 
-$servername = "root.cgb1kkiboypt.us-east-1.rds.amazonaws.com";
-$dbusername = "root";
-$dbpassword = "admin123";
+$servername = "accountantdb.cecg8fpgzvzf.us-east-1.rds.amazonaws.com";
+$dbusername = "admin";
+$dbpassword = "AppDomain!";
 $dbname = "theaccdb";
 
 

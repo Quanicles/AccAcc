@@ -1,7 +1,25 @@
-<!-- Landing Page navagation bar -->
 <?php
 // include classes
-include_once 'config/database.php';
+require_once "config/core.php";
+require_once 'config/database.php';
+
+if (isset($_COOKIE['user'])) {
+    $user_check_query = "SELECT role FROM users WHERE  id={$_COOKIE['user']} LIMIT 1";
+    $result = mysqli_query($conn, $user_check_query);
+    $user = mysqli_fetch_assoc($result);
+    switch ($user['role']) {
+        case 0:
+            header('location: adminpage.php');
+            break;
+        case 1:
+            header('location: managerpage.php');
+            break;
+        case 2:
+            header('location: customerpage.php');
+            break;
+    }
+}
+
 if (isset($_POST['create'])) {
   $firstname =  $_POST['firstname'];
   $lastname =  $_POST['lastname'];
@@ -14,15 +32,19 @@ if (isset($_POST['create'])) {
   $email = mysqli_real_escape_string($conn, $_POST['email']);
   $dob = mysqli_real_escape_string($conn, $_POST['dob']);
   $password = mysqli_real_escape_string($conn, $_POST['password']);
-  $username = $firstname[0] . $lastname ."1911";
+  if (!empty($firstname) and !empty($lastname)) {
+      $username = $firstname[0] . $lastname ."1911";
+  }
 
   // form validation: ensure that the form is correctly filled ...
   // by adding (array_push()) corresponding error unto $errors array
   if (empty($firstname)) { array_push($errors, "First name is required"); }
-  if (empty($Lastname)) { array_push($errors, "Last name is required"); }
+  if (empty($lastname)) { array_push($errors, "Last name is required"); }
   if (empty($email)) { array_push($errors, "Email is required"); }
   if (empty($dob)) { array_push($errors, "Date of birth is required"); }
   if (empty($password)) { array_push($errors, "Password is required"); }
+
+
 
 
   // first check the database to make sure
@@ -38,16 +60,25 @@ if (isset($_POST['create'])) {
   }
 
   // Finally, register user if there are no errors in the form
-  if (count($errors) == 0) {
+  if (isset($errors) and count($errors) == 0) {
    $password = md5($password);//encrypt the password before saving in the database
 
-   $query = "INSERT INTO users (firstname, lastname, email, dob, password, username)
+      $query = "INSERT INTO users (firstname, lastname, email, dob, password, username)
          VALUES('$firstname','$lastname', '$email','$dob', '$password','$username')";
    mysqli_query($conn, $query);
    $_SESSION['email'] = $email;
    $_SESSION['success'] = "You are now logged in";
-   header('location: index.php');
-   echo "Thank You! you are now registered.";
+   if (isset($_POST['admin'])) {
+       header('location: adminpage.php');
+   }
+   else {
+       header('location: index.php?new=created');
+
+   }
+
+  }
+  elseif (isset($_POST['admin'])) {
+      header('location: adminpage.php');
   }
 }
 ?>
@@ -69,6 +100,7 @@ if (isset($_POST['create'])) {
     <img src="images/Logo_file.png" class="img-fluid logo ml-3" alt="Project Logo">
 
     <div class="col-sm-6">
+        <h2><?php if (isset($_GET['new'])) print('Registration success. Now administrator needs to approved your account. Then you can log in');?></h2>
       <div class="card mt-5">
         <div class="card-heading bg-primary text-white rounded pt-1 pb-1">
           <h3 class="text-center">Register</h3>
@@ -94,7 +126,8 @@ if (isset($_POST['create'])) {
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control"  name="password" placeholder="Password" >
+<!--              <input type="password" class="form-control"  name="password" placeholder="Password" pattern="[a-zA-Z][a-zA-Z0-9\W]{7,}">-->
+              <input type="password" class="form-control"  name="password" placeholder="Password" pattern="[a-zA-Z](?=.*\d)(?=.*[a-zA-Z])(?=.*\W).{7,}">
             </div>
             <button type="submit" name="create" class="btn btn-primary">Register</button>
             <p class ="pt-2"><a href ="login.php"> Already a member? Click here to login</a></p>

@@ -1,0 +1,28 @@
+#username{
+  margin-left: 20px;
+}
+
+.card{
+  background-color: #f7f7f7;
+}
+
+.logo{
+  width: 450px;
+}
+
+.row1{
+    margin-left: 15px!important;
+    margin-right: 15px!important;
+    width: 100%;
+}
+
+#user-create, #mail-create{
+  text-align: center;
+}
+
+#user-create form, #mail-create form{
+  width: 50%;
+  display:inline-block;
+  border: 1px dashed black;
+  padding: 15px;
+}
