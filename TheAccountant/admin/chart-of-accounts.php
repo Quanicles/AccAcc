@@ -137,8 +137,8 @@ $conn->close();
         <td class="table-row"><?php echo $row["comments"]; ?></td>
 				<!-- action -->
 				<td class="table-row" colspan="2">
-          <a href="chart-of-accounts.php?edit=<?= $row["id"]; ?>"; class="badge badge-primary p-2">Edit</a>
-          <a href="chart-of-accounts.php?delete=<?= $row['id']; ?>" class="badge badge-danger p-2 ml-2" onclick="return confirm('Do you want to delete this account?')" >Delete</a>
+          <a href="chart-of-accounts.php?edit=<?= $row["id"]; ?>"; class="badge badge-primary p-2" style="width: 70px;">Edit</a>
+          <a href="chart-of-accounts.php?delete=<?= $row['id']; ?>" class="badge badge-danger p-2 ml-2" onclick="return confirm('Do you want to delete this account?')" >Deactivate</a>
 			</tr>
 			<?php
 					}

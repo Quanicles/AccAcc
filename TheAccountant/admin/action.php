@@ -17,6 +17,7 @@ if(isset($_POST['add'])){
     {
       $_SESSION['response'] = "Account in use";
       mysqli_close($conn);
+      header('location:chart-of-accounts.php');
       exit();
 
     }
@@ -50,10 +51,10 @@ if(isset($_GET['delete'])){
   $stmt=$conn->prepare($query);
   $stmt->bind_param("i",$id);
   $stmt->execute();
-
-  header('location:chart-of-accounts.php');
   $_SESSION['response'] = "Successfully Deleted from the database";
   $_SESSION['res_type'] ="Danger";
+  header('location:chart-of-accounts.php');
+
 }
 
 
